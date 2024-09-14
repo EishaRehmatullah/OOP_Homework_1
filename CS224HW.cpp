@@ -1,47 +1,86 @@
 #include <iostream>
 #include <string>
-#include <cstdlib>
 using namespace std;
- 
-struct BankAccount() {
-    string name;
-    int account_number;
+
+struct BankAccount {
+    string accountHolder;
+    string accountNumber;
     double balance;
-    int status;
+    string status;
+    
 };
-void open_account() {}
-// void deposit_amount() {}
-// void withdraw_amount() {}
-// void generate_statemnt() {}
-// void view_all_accounts() {}
-// void deduct_tax() {}
+
+void openAccount(BankAccount &accounts , int &nextAccountNumber) {
+    accounts.status = "Active";
+    cout << "Enter Account jolder's name: ";
+    cin >> accounts.accountHolder;
+    accounts.accountNumber = nextAccountNumber;
+    accounts.balance = 0.0;
+    cout << "Account created successfully!" << "Account Number: " << accounts.accountNumber << endl;
+}
+
+void depositAmount(BankAccount &accounts) {
+    double balance;
+    cout << "Enter the amount to deposit: ";
+    cin >> balance;
+    if (deposit <= 0) {
+        cout << "Invalid amount. Cannot deposit negative amount." << endl;
+        return;
+    }
+    accounts.balance += balance
+    cout << "Amount deposited successfully!" ;
+}
+
 
 int main() {
-    cout << "Welcome to Bank Stimulation Program!" << endl << "Are you a Customer (1) or an Employee (2)"
-    << endl << "Enter your role  (1) for Customer, (2) for Employee: ";
+    cout << "Welcome to Bank Simulation Program!" << endl;
+    static int nextAccountNumber = 10000000;
+    BankAccount accounts[1000000];
+    int numberOfAccounts = 0; //to track number of accounts added
     int role;
-    cin >> role;
-    switch (role)
-    {
-    case 1:
-        cout << "Customer Menu: \n1. Open Account \n2. Deposit Amount \n3. Withdraw Amount \n4. Generate Account Statement \n5. Return to Role Menu \n6. Exit \nEnter your choice: ";
-        int choice;
-        cin >> choice;
-        switch (choice) 
-        {
+    do {
+        cout << "Are you a Customer (1) or an Employee (2)?" ;
+        switch (role) {
+            //Option selected: Customer
             case 1:
-            cout << "Enter account holder's name: ";
-            string name;
-            cin >> name;
+            int choice;
+            cout << "Customer Menu: \n1. Open Account \n2. Deposit Amount \n3. Withdraw Amount \n4. Generate Account Statement \n5. Exit\nEnter your choice: ";
+            cin >> choice;
+
+            switch(choice) {
+                //Call openAccount function
+                case 1:
+                    openAccount(accounts[numberOfAccounts] , nextAccountNumber);
+                    numberOfAccounts++ ;
+                    break;
+                //Call depositAmount function
+                case 2:
+                    int accountNumber;
+                    cout << "Enter Account Number: ";
+                    cin >> accountNumber;
+                    for (int i=0; i < numberOfAccounts; i++ ) {
+                        if (accounts[i].accountNumber == accountNumber) {
+                            depositAmount(accounts[i]);
+                        }
+                    }
+                    cout << "Account not found." ;
+                    break;
+                //Call withdrawAmount function
+                case 3:
+                    int acc_num;
+                    cout << "Enter account number: ";
+                    cin >> acc_num;
+                    for (int i=0; i < numberOfAccounts; i++ ) {
+                        if (accounts[i].accountNumber == accountNumber) {
+                            withdrawAmount(accounts[i]);
+                        }
+                    }
+                    cout << "Account not found." ;
+                    break;
 
         }
-        break;
-    case 2:
-        cout << "Employee Menu: \n1. View All Accounts \n2. Deduct tax \n3. Add Bonus \n4. Change Account Status \n5. Return to Role Menu \n6. Exit \nEnter your choice: ";
-        int choice2;
-        cin >> choice2;
-    
-    default:
-        break;
     }
-}
+    // return 0;
+
+
+}  while( role != 0);
