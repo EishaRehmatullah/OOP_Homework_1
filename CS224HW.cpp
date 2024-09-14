@@ -21,6 +21,10 @@ void openAccount(BankAccount &accounts , int &nextAccountNumber) {
 
 void depositAmount(BankAccount &accounts) {
     double balance;
+    if (accounts.status == "Frozen") {
+        cout << "Your Account is frozen. Cannot perform any actions" << endl;
+        return;
+    }
     cout << "Enter the amount to deposit: ";
     cin >> balance;
     if (deposit <= 0) {
@@ -29,6 +33,22 @@ void depositAmount(BankAccount &accounts) {
     }
     accounts.balance += balance
     cout << "Amount deposited successfully!" ;
+}
+
+void withdrawAmount(BankAccount &accounts) {
+    double balance;
+    if (accounts.status == "Frozen") {
+        cout << "Your Account is frozen. Cannot perform any actions" << endl;
+        return;
+    }
+    cout << "Enter the amount you want to withdraw: ";
+    cin >> balance;
+    if (balance >= accounts.balance) {
+        cout << "Insufficient funds." << endl;
+        return;
+    }
+    accounts.balance -= balance
+    cout << "Amount withdrawn successfully!" ;
 }
 
 
